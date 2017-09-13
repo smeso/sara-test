@@ -1,0 +1,14 @@
+Source: sara-test
+Maintainer: Salvatore Mesoraca <s.mesoraca16@gmail.com>
+Section: devel
+Priority: optional
+Build-Depends: debhelper (>= 9)
+Standards-Version: 3.9.5
+Homepage: https://github.com/smeso/sara-test
+
+Package: sara-test
+Architecture: any
+Depends: ${misc:Depends}, ${shlibs:Depends}, saractl
+Description: S.A.R.A.'s test suite.
+ S.A.R.A.'s test suite.
+ Work in Progress

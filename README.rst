@@ -1,0 +1,23 @@
+=========
+sara-test
+=========
+
+sara-test is a test suite for S.A.R.A. LSM.
+
+To install it run:
+	make
+	sudo make install
+
+To uninstall it run:
+	sudo make uninstall
+
+To use it without installing it, put the following
+lines in your sara wxprot config file::
+
+	SOURCE_PATH/bin/* mprotect,relro,verbose
+	SOURCE_PATH/bin/procattr relro,complain,verbose
+	SOURCE_PATH/bin/fake_tramp mprotect,emutramp,relro,verbose
+	SOURCE_PATH/bin/trampoline* mprotect,emutramp,relro,verbose
+
+and then run:
+	EXTRA_BINS_PATH="." make && cd bin && ./sara-test
