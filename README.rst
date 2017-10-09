@@ -14,10 +14,10 @@ To uninstall it run:
 To use it without installing it, put the following
 lines in your sara wxprot config file::
 
-	SOURCE_PATH/bin/* mprotect,relro,verbose
-	SOURCE_PATH/bin/procattr relro,complain,verbose
-	SOURCE_PATH/bin/fake_tramp mprotect,emutramp,relro,verbose
-	SOURCE_PATH/bin/trampoline* mprotect,emutramp,relro,verbose
+	SOURCE_PATH/bin/* mprotect,verbose
+	SOURCE_PATH/bin/procattr mmap,complain,verbose
+	SOURCE_PATH/bin/fake_tramp mprotect,emutramp_or_mprotect,verbose
+	SOURCE_PATH/bin/trampoline* mprotect,emutramp_or_mprotect,verbose
 
 and then run:
 	EXTRA_BINS_PATH="." make && cd bin && ./sara-test
