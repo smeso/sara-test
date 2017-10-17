@@ -21,7 +21,11 @@
 #include "utils.h"
 #include "libsara/libsara.h"
 
-#define INITIAL_FLAGS 0x70
+#define INITIAL_FLAGS (SARA_WXORX | \
+		       SARA_OTHER | \
+		       SARA_MMAP | \
+		       SARA_COMPLAIN | \
+		       SARA_VERBOSE)
 
 int correct_settings(void)
 {

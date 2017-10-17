@@ -101,7 +101,7 @@ install: all
 	mkdir -p $(DESTDIR)/etc/sara/wxprot.conf.d/
 	echo "/$(BINDIR)sara-test mprotect,verbose" > $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
 	echo "$(EXTRA_BINS_PATH)* mprotect,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
-	echo "$(EXTRA_BINS_PATH)procattr mmap,complain,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
+	echo "$(EXTRA_BINS_PATH)procattr mmap,other,complain,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
 	echo "$(EXTRA_BINS_PATH)fake_tramp mprotect,emutramp_or_mprotect,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
 	echo "$(EXTRA_BINS_PATH)trampoline* mprotect,emutramp_or_mprotect,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
 uninstall:
