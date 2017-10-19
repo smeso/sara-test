@@ -41,17 +41,17 @@ void get_perms(const void *m, pid_t pid, char perms[5])
 		exit(2);
 	}
 	snprintf(addr, 50, "%08lx-", (unsigned long) GET_PAGE_ADDR(m));
-	snprintf(perms, sizeof(perms), "none");
+	snprintf(perms, 5, "none");
 	while (fgets(buffer, BUFSIZE, fd) != NULL) {
 		if (strncmp(buffer, addr, strlen(addr)) == 0) {
 			token = strtok(buffer, " ");
 			token = strtok(NULL, " ");
-			snprintf(perms, sizeof(perms), "%s", token);
+			snprintf(perms, 5, "%s", token);
 			break;
 		}
 	}
 	fclose(fd);
-	if (strncmp(perms, "none", sizeof(perms)) == 0) {
+	if (strncmp(perms, "none", 5) == 0) {
 		printf("proc error: page not found\n");
 		exit(2);
 	}
