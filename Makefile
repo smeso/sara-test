@@ -31,6 +31,9 @@ CC := $(CROSS_COMPILE)gcc
 LD := $(CROSS_COMPILE)ld
 CFLAGS_nopie := -O2 $(CFLAGS)
 LDFLAGS_nopie := -fno-pie $(LDFLAGS)
+ifneq ($(shell $(CC) -dumpspecs 2>/dev/null | grep -e no-pie),)
+	LDFLAGS_nopie := -no-pie $(LDFLAGS_nopie)
+endif
 CFLAGS := -O2 -fPIE -fstack-protector $(CFLAGS)
 LDFLAGS := -Wl,-z,relro -Wl,-z,now -Wl,-Bsymbolic-functions -pie $(LDFLAGS)
 BIN := ./bin/
