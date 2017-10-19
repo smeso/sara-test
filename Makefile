@@ -29,10 +29,10 @@ endif
 
 CC := $(CROSS_COMPILE)gcc
 LD := $(CROSS_COMPILE)ld
+CFLAGS_nopie := -O2 $(CFLAGS)
+LDFLAGS_nopie := -fno-pie $(LDFLAGS)
 CFLAGS := -O2 -fPIE -fstack-protector $(CFLAGS)
 LDFLAGS := -Wl,-z,relro -Wl,-z,now -Wl,-Bsymbolic-functions -pie $(LDFLAGS)
-CFLAGS_nopie := -O2 $(CFLAGS)
-LDFLAGS_nopie := -fno-pie $(CFLAGS)
 BIN := ./bin/
 SOURCE := ./src/
 
