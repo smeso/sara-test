@@ -34,7 +34,7 @@ void get_perms(const void *m, pid_t pid, char perms[5])
 	char *token;
 	char addr[50] = {0};
 
-	snprintf(path, 25, "/proc/%hu/maps", pid);
+	snprintf(path, 25, "/proc/%d/maps", pid);
 	fd = fopen(path, "r");
 	if (fd == NULL) {
 		printf("proc open failed: %s\n", strerror(errno));
@@ -65,7 +65,7 @@ int count_wx_mappings(pid_t pid)
 	char buffer[BUFSIZE]  = {0};
 	char *token;
 
-	snprintf(path, 25, "/proc/%hu/maps", pid);
+	snprintf(path, 25, "/proc/%d/maps", pid);
 	fd = fopen(path, "r");
 	if (fd == NULL) {
 		printf("proc open failed: %s\n", strerror(errno));
