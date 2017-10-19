@@ -25,7 +25,7 @@
 #include <elf.h>
 
 #include "utils.h"
-#include "libsara/libsara.h"
+#include "libsara/sara.h"
 
 #define TRAMPOLINE_EXEC EXTRA_BINS_PATH "/trampoline"
 #define TRAMPOLINE_NOPIE_EXEC EXTRA_BINS_PATH "/trampoline_nopie"

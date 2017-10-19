@@ -17,7 +17,7 @@
  */
 
 #include <unistd.h>
-#include "libsara/libsara.h"
+#include "libsara/sara.h"
 
 int main(int argc, char *argv[])
 {

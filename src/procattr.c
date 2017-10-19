@@ -19,7 +19,7 @@
 #include <stdio.h>
 
 #include "utils.h"
-#include "libsara/libsara.h"
+#include "libsara/sara.h"
 
 #define INITIAL_FLAGS (SARA_WXORX | \
 		       SARA_OTHER | \
