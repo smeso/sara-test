@@ -170,12 +170,12 @@ int heap_mprotect(void)
 {
 	void *m;
 
-	m = malloc(PAGESIZE);
+	m = malloc(PAGESIZE*3);
 	if (m == NULL) {
 		printf("Out of memory.\n");
 		exit(2);
 	}
-	if (try_x(m, PAGESIZE))
+	if (try_x(m+PAGESIZE, PAGESIZE))
 		return 1;
 	return 0;
 }
