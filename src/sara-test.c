@@ -335,11 +335,13 @@ int main(int argc, char *argv[])
 	RUN_TEST(data_mprotect);
 	RUN_TEST(mmap_exec);
 	RUN_TEST(transfer);
+#if defined __x86_64__ || defined __i386__
 	RUN_TEST(gcc_trampolines_working1);
 	RUN_TEST(gcc_trampolines_working2);
-#if defined __x86_64__ || defined __i386__
 	RUN_TEST(fake_trampolines);
 #else
+	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working1");
+	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working2");
 	printf("%25s:\tNOT AVAILABLE\n", "fake_trampolines");
 #endif
 
