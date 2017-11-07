@@ -294,7 +294,7 @@ int mmap_exec(void)
 	void *m;
 
 	if (add_wxprot_self_flags(SARA_MMAP))
-		return 1;
+		return 2;
 	fd = open(THIS_FILE, O_RDONLY);
 	if (fd == -1) {
                 printf("open failed: %s\n", strerror(errno));
