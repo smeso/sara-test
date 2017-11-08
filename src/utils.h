@@ -23,11 +23,11 @@
 #include <errno.h>
 #include <string.h>
 
-#define SUPPOSED_PAGESIZE 4096
+#define SUPPOSED_PSIZE 4096
 #define BUFSIZE 4096
 
 #define GET_PAGE_ADDR(ADDR)					\
-	(char *)(((unsigned long) ADDR) & ~(PAGESIZE-1))
+	(char *)(((unsigned long) ADDR) & ~(PSIZE-1))
 
 #define RUN_TEST(NAME) do {							\
 	pid_t child;								\
@@ -48,7 +48,7 @@
 	}									\
 } while (0)
 
-extern int PAGESIZE;
+extern int PSIZE;
 
 void get_perms(const void *m, pid_t pid, char perms[5]);
 int count_wx_mappings(pid_t pid);

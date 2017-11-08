@@ -24,7 +24,7 @@
 
 #include "utils.h"
 
-int PAGESIZE = SUPPOSED_PAGESIZE;
+int PSIZE = SUPPOSED_PSIZE;
 
 void get_perms(const void *m, pid_t pid, char perms[5])
 {

@@ -35,8 +35,8 @@
 #define FAKET_EXEC EXTRA_BINS_PATH "/fake_tramp"
 #define THIS_FILE "/proc/self/exe"
 
-char BSS[SUPPOSED_PAGESIZE];
-char DATA[SUPPOSED_PAGESIZE] = {0};
+char BSS[SUPPOSED_PSIZE];
+char DATA[SUPPOSED_PSIZE] = {0};
 
 int wx_mappings(void)
 {
@@ -119,11 +119,11 @@ int anon_mmap_wx(void)
 {
 	void *m;
 
-	m = do_mmap(PAGESIZE, PROT_READ | PROT_WRITE | PROT_EXEC,
+	m = do_mmap(PSIZE, PROT_READ | PROT_WRITE | PROT_EXEC,
 		    MAP_PRIVATE | MAP_ANONYMOUS, -1);
 	if (is_wx(m))
 		return 1;
-	munmap(m, PAGESIZE);
+	munmap(m, PSIZE);
 	return 0;
 }
 
@@ -137,7 +137,7 @@ int file_mmap_wx(void)
                 printf("open failed: %s\n", strerror(errno));
                 exit(2);
         }
-        m = do_mmap(PAGESIZE, PROT_READ | PROT_WRITE | PROT_EXEC,
+        m = do_mmap(PSIZE, PROT_READ | PROT_WRITE | PROT_EXEC,
 		    MAP_PRIVATE, fd);
 	close(fd);
 	if (is_wx(m))
@@ -170,21 +170,21 @@ int heap_mprotect(void)
 {
 	void *m;
 
-	m = malloc(PAGESIZE*3);
+	m = malloc(PSIZE*3);
 	if (m == NULL) {
 		printf("Out of memory.\n");
 		exit(2);
 	}
-	if (try_x(m+PAGESIZE, PAGESIZE))
+	if (try_x(m+PSIZE, PSIZE))
 		return 1;
 	return 0;
 }
 
 int stack_mprotect(void)
 {
-	char stack[SUPPOSED_PAGESIZE*3];
+	char stack[SUPPOSED_PSIZE*3];
 
-	if (try_x(stack+SUPPOSED_PAGESIZE, SUPPOSED_PAGESIZE))
+	if (try_x(stack+SUPPOSED_PSIZE, SUPPOSED_PSIZE))
 		return 1;
 	return 0;
 }
@@ -193,9 +193,9 @@ int anon_mmap_mprotect(void)
 {
 	void *m;
 
-	m = do_mmap(PAGESIZE, PROT_READ | PROT_WRITE,
+	m = do_mmap(PSIZE, PROT_READ | PROT_WRITE,
 		    MAP_PRIVATE | MAP_ANONYMOUS, -1);
-	if (try_x(m, PAGESIZE))
+	if (try_x(m, PSIZE))
 		return 1;
 	return 0;
 }
@@ -210,9 +210,9 @@ int file_mmap_mprotect(void)
                 printf("open failed: %s\n", strerror(errno));
                 exit(2);
         }
-	m = do_mmap(PAGESIZE, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd);
+	m = do_mmap(PSIZE, PROT_READ | PROT_WRITE, MAP_PRIVATE, fd);
 	close(fd);
-	if (try_x(m, PAGESIZE))
+	if (try_x(m, PSIZE))
 		return 1;
 	return 0;
 }
@@ -221,7 +221,7 @@ int text_mprotect(void)
 {
 	void *m = text_mprotect;
 
-	if (try_wx(m, PAGESIZE))
+	if (try_wx(m, PSIZE))
 		return 1;
 	return 0;
 }
@@ -300,7 +300,7 @@ int mmap_exec(void)
                 printf("open failed: %s\n", strerror(errno));
                 exit(2);
         }
-        m = do_mmap(PAGESIZE, PROT_READ | PROT_EXEC,
+        m = do_mmap(PSIZE, PROT_READ | PROT_EXEC,
 		    MAP_PRIVATE, fd);
 	close(fd);
 	return 1;
@@ -310,7 +310,7 @@ int main(int argc, char *argv[])
 {
 	pid_t child;
 
-	PAGESIZE = getpagesize();
+	PSIZE = getpagesize();
 
 	printf("These tests should pass even with SARA disabled:\n");
 	RUN_TEST(wx_mappings);

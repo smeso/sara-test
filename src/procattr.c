@@ -73,7 +73,7 @@ int force_wxorx(void)
 {
 	uint16_t flags = SARA_FULL | SARA_VERBOSE;
 
-	do_mprotect(force_wxorx, PAGESIZE, PROT_READ | PROT_WRITE | PROT_EXEC);
+	do_mprotect(force_wxorx, PSIZE, PROT_READ | PROT_WRITE | PROT_EXEC);
 	if (count_wx_mappings(getpid()) == 0)
 		return 2;
 	if (set_wxprot_self_flags(flags))
@@ -91,7 +91,7 @@ int force_wxorx(void)
 
 int main(int argc, char *argv[])
 {
-	PAGESIZE = getpagesize();
+	PSIZE = getpagesize();
 
 	RUN_TEST(correct_settings);
 	if (correct_settings()) {
