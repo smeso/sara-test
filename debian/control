@@ -4,11 +4,10 @@ Section: devel
 Priority: optional
 Build-Depends: debhelper (>= 9)
 Standards-Version: 3.9.5
-Homepage: https://github.com/smeso/sara-test
+Homepage: https://smeso.it/sara
 
 Package: sara-test
 Architecture: any
 Depends: ${misc:Depends}, ${shlibs:Depends}, saractl
 Description: S.A.R.A.'s test suite.
- S.A.R.A.'s test suite.
- Work in Progress
+ sara-test is a regression test tool for S.A.R.A.
