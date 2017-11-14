@@ -87,6 +87,7 @@ ifdef EXTRA_BINS_PATH
 install: all
 	mkdir -p $(DESTDIR)/$(EXTRA_BINS_PATH)
 	mkdir -p $(DESTDIR)/$(BINDIR)
+	mkdir -p $(DESTDIR)/usr/share/man/man1/
 	cp $(BIN)trampoline $(DESTDIR)/$(EXTRA_BINS_PATH)
 	cp $(BIN)trampoline_nopie $(DESTDIR)/$(EXTRA_BINS_PATH)
 	cp $(BIN)trampoline_exstack $(DESTDIR)/$(EXTRA_BINS_PATH)
@@ -107,6 +108,7 @@ install: all
 	echo "$(EXTRA_BINS_PATH)procattr mmap,other,complain,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
 	echo "$(EXTRA_BINS_PATH)fake_tramp mprotect,emutramp_or_mprotect,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
 	echo "$(EXTRA_BINS_PATH)trampoline* mprotect,emutramp_or_mprotect,verbose" >> $(DESTDIR)/etc/sara/wxprot.conf.d/10_saratest.conf
+	gzip -c man/sara-test.1 > $(DESTDIR)/usr/share/man/man1/sara-test.1.gz
 uninstall:
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline_nopie
@@ -115,6 +117,7 @@ uninstall:
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/transfer
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/fake_tramp
 	-rm $(DESTDIR)/$(BINDIR)/sara-test
+	-rm $(DESTDIR)/usr/share/man/man1/sara-test.1.gz
 endif
 endif
 endif
