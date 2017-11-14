@@ -21,3 +21,5 @@ lines in your sara wxprot config file::
 
 and then run:
 	EXTRA_BINS_PATH="." make && cd bin && ./sara-test
+
+You can find more information on S.A.R.A. at <https://smeso.it/sara>
