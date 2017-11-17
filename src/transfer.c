@@ -29,7 +29,8 @@ int main(int argc, char *argv[])
 	} else {
 		if (get_wxprot_self_flags() & SARA_TRANSFER)
 			return 2;
-		add_wxprot_self_flags(SARA_TRANSFER);
+		if (add_wxprot_self_flags(SARA_TRANSFER))
+			return 2;
 		execlp(argv[0], argv[0], "foo", (char *) NULL);
 	}
 

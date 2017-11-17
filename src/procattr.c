@@ -49,7 +49,8 @@ int complain_change(void)
 		return 2;
 	if (get_wxprot_self_flags() == INITIAL_FLAGS)
 		return 1;
-	set_wxprot_self_flags(INITIAL_FLAGS & SARA_COMPLAIN);
+	if (!set_wxprot_self_flags(INITIAL_FLAGS & SARA_COMPLAIN))
+		return 1;
 	if (get_wxprot_self_flags() == INITIAL_FLAGS)
 		return 1;
 	return 0;
@@ -63,7 +64,8 @@ int full_change_no_force(void)
 		return 2;
 	if (get_wxprot_self_flags() != flags)
 		return 1;
-	set_wxprot_self_flags(INITIAL_FLAGS);
+	if (!set_wxprot_self_flags(INITIAL_FLAGS))
+		return 1;
 	if (get_wxprot_self_flags() == INITIAL_FLAGS)
 		return 1;
 	return 0;
@@ -83,7 +85,8 @@ int force_wxorx(void)
 		return 1;
 	if (count_wx_mappings(getpid()) != 0)
 		return 1;
-	set_wxprot_self_flags(INITIAL_FLAGS);
+	if (!set_wxprot_self_flags(INITIAL_FLAGS))
+		return 1;
 	if (get_wxprot_self_flags() == INITIAL_FLAGS)
 		return 1;
 	return 0;
