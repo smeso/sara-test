@@ -22,4 +22,7 @@ lines in your sara wxprot config file::
 and then run:
 	EXTRA_BINS_PATH="." make && cd bin && ./sara-test
 
+Please note that, due to the need to create GCC trampolines, sara-test must
+be compiled using GCC.
+
 You can find more information on S.A.R.A. at <https://smeso.it/sara>
