@@ -42,7 +42,6 @@ SOURCE := ./src/
 all:	$(BIN)sara-test \
 	$(BIN)trampoline \
 	$(BIN)trampoline_nopie \
-	$(BIN)trampoline_exstack \
 	$(BIN)procattr \
 	$(BIN)fake_tramp \
 	$(BIN)transfer
@@ -64,16 +63,13 @@ $(BIN)transfer: $(SOURCE)transfer.o $(SOURCE)libsara/libsara.o
 	$(CC) -o $@ $^ $(LDFLAGS)
 
 $(BIN)trampoline: $(SOURCE)trampoline.o
-	$(CC) -z noexecstack -o $@ $^ $(LDFLAGS)
-
-$(BIN)trampoline_exstack: $(SOURCE)trampoline.o
 	$(CC) -z execstack -o $@ $^ $(LDFLAGS)
 
 $(SOURCE)trampoline_nopie.o: $(SOURCE)trampoline.c
 	$(CC) -c -o $@ $< $(CFLAGS_nopie) -DEXTRA_BINS_PATH=\"${EXTRA_BINS_PATH}\"
 
 $(BIN)trampoline_nopie: $(SOURCE)trampoline_nopie.o
-	$(CC) -z noexecstack -o $@ $^ $(LDFLAGS_nopie)
+	$(CC) -z execstack -o $@ $^ $(LDFLAGS_nopie)
 
 $(SOURCE)fake_tramp.o: $(SOURCE)fake_tramp.c
 	$(CC) -c -o $@ $< -Wno-pointer-to-int-cast $(CFLAGS_nopie)
@@ -90,7 +86,6 @@ install: all
 	mkdir -p $(DESTDIR)/usr/share/man/man1/
 	cp $(BIN)trampoline $(DESTDIR)/$(EXTRA_BINS_PATH)
 	cp $(BIN)trampoline_nopie $(DESTDIR)/$(EXTRA_BINS_PATH)
-	cp $(BIN)trampoline_exstack $(DESTDIR)/$(EXTRA_BINS_PATH)
 	cp $(BIN)procattr $(DESTDIR)/$(EXTRA_BINS_PATH)
 	cp $(BIN)transfer $(DESTDIR)/$(EXTRA_BINS_PATH)
 	cp $(BIN)fake_tramp $(DESTDIR)/$(EXTRA_BINS_PATH)
@@ -98,7 +93,6 @@ install: all
 	chmod 755 $(DESTDIR)/$(BINDIR)/sara-test
 	chmod 755 $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline
 	chmod 755 $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline_nopie
-	chmod 755 $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline_exstack
 	chmod 755 $(DESTDIR)/$(EXTRA_BINS_PATH)/transfer
 	chmod 755 $(DESTDIR)/$(EXTRA_BINS_PATH)/procattr
 	chmod 755 $(DESTDIR)/$(EXTRA_BINS_PATH)/fake_tramp
@@ -112,7 +106,6 @@ install: all
 uninstall:
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline_nopie
-	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/trampoline_exstack
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/procattr
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/transfer
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/fake_tramp

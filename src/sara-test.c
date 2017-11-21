@@ -29,7 +29,6 @@
 
 #define TRAMPOLINE_EXEC EXTRA_BINS_PATH "/trampoline"
 #define TRAMPOLINE_NOPIE_EXEC EXTRA_BINS_PATH "/trampoline_nopie"
-#define TRAMPOLINE_EXSTACK_EXEC EXTRA_BINS_PATH "/trampoline_exstack"
 #define TRANSFER_EXEC EXTRA_BINS_PATH "/transfer"
 #define PROCATTR_EXEC EXTRA_BINS_PATH "/procattr"
 #define FAKET_EXEC EXTRA_BINS_PATH "/fake_tramp"
@@ -154,7 +153,7 @@ int gnu_executable_stack(void)
 		printf("cannot fork: %s\n", strerror(errno));
 		return 2;
 	} else if (child == 0) {
-		execlp(TRAMPOLINE_EXSTACK_EXEC, TRAMPOLINE_EXSTACK_EXEC,
+		execlp(TRAMPOLINE_EXEC, TRAMPOLINE_EXEC,
 		       (char *) NULL);
 	} else {
 		usleep(10000);
@@ -317,8 +316,12 @@ int main(int argc, char *argv[])
 	RUN_TEST(nx_shellcode);
 #if defined __x86_64__ || defined __i386__
 	RUN_TEST(fake_trampoline_heap);
+	RUN_TEST(gcc_trampolines_working1);
+	RUN_TEST(gcc_trampolines_working2);
 #else
 	printf("%25s:\tNOT AVAILABLE\n", "fake_trampoline_heap");
+	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working1");
+	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working2");
 #endif
 
 	printf("\n");
@@ -336,12 +339,8 @@ int main(int argc, char *argv[])
 	RUN_TEST(mmap_exec);
 	RUN_TEST(transfer);
 #if defined __x86_64__ || defined __i386__
-	RUN_TEST(gcc_trampolines_working1);
-	RUN_TEST(gcc_trampolines_working2);
 	RUN_TEST(fake_trampolines);
 #else
-	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working1");
-	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working2");
 	printf("%25s:\tNOT AVAILABLE\n", "fake_trampolines");
 #endif
 

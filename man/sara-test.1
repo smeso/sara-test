@@ -1,6 +1,6 @@
 .\" Man page generated from reStructuredText.
 .
-.TH "SARA-TEST" "1" "November 19, 2017" "0.1" "S.A.R.A."
+.TH "SARA-TEST" "1" "November 21, 2017" "0.1" "S.A.R.A."
 .SH NAME
 sara-test \- S.A.R.A.'s test suite.
 .
@@ -46,6 +46,8 @@ These tests should pass even with SARA disabled:
               wx_mappings:      OK
              nx_shellcode:      OK
      fake_trampoline_heap:      OK
+ gcc_trampolines_working1:      OK
+ gcc_trampolines_working2:      OK
 
 These tests should pass with SARA fully enabled:
              anon_mmap_wx:      VULNERABLE
@@ -59,9 +61,7 @@ These tests should pass with SARA fully enabled:
              bss_mprotect:      VULNERABLE
             data_mprotect:      VULNERABLE
                 mmap_exec:      VULNERABLE
-                 transfer:      VULNERABLE
- gcc_trampolines_working1:      ERROR
- gcc_trampolines_working2:      ERROR
+                 transfer:      ERROR
          fake_trampolines:      ERROR
 
 Tests for procattr interface:
@@ -82,6 +82,8 @@ These tests should pass even with SARA disabled:
               wx_mappings:      OK
              nx_shellcode:      OK
      fake_trampoline_heap:      OK
+ gcc_trampolines_working1:      OK
+ gcc_trampolines_working2:      OK
 
 These tests should pass with SARA fully enabled:
              anon_mmap_wx:      OK
@@ -96,8 +98,6 @@ These tests should pass with SARA fully enabled:
             data_mprotect:      OK
                 mmap_exec:      OK
                  transfer:      OK
- gcc_trampolines_working1:      OK
- gcc_trampolines_working2:      OK
          fake_trampolines:      OK
 
 Tests for procattr interface:
