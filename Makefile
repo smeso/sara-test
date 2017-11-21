@@ -39,12 +39,16 @@ LDFLAGS := -Wl,-z,relro -Wl,-z,now -Wl,-Bsymbolic-functions -pie $(LDFLAGS)
 BIN := ./bin/
 SOURCE := ./src/
 
-all:	$(BIN)sara-test \
+all:	$(BIN) \
+	$(BIN)sara-test \
 	$(BIN)trampoline \
 	$(BIN)trampoline_nopie \
 	$(BIN)procattr \
 	$(BIN)fake_tramp \
 	$(BIN)transfer
+
+$(BIN):
+	mkdir -p $(BIN)
 
 $(SOURCE)%.o: $(SOURCE)%.c
 	$(CC) -c -o $@ $< $(CFLAGS) -DEXTRA_BINS_PATH=\"${EXTRA_BINS_PATH}\"
