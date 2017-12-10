@@ -309,6 +309,7 @@ int main(int argc, char *argv[])
 	pid_t child;
 
 	PSIZE = getpagesize();
+	setvbuf(stdout, NULL, _IOLBF, 0);
 
 	printf("These tests should pass even with SARA disabled:\n");
 	RUN_TEST(wx_mappings);

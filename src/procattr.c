@@ -95,6 +95,7 @@ int force_wxorx(void)
 int main(int argc, char *argv[])
 {
 	PSIZE = getpagesize();
+	setvbuf(stdout, NULL, _IOLBF, 0);
 
 	RUN_TEST(correct_settings);
 	if (correct_settings()) {
