@@ -120,9 +120,12 @@ endif
 endif
 
 clean:
-	-rm -f $(BIN)*
 	-rm -f $(SOURCE)*.o $(SOURCE)*~
 	-rm -f *.o *~
 	cd $(SOURCE)/libsara && $(MAKE) clean
 
-.PHONY: all install uninstall clean
+distclean: clean
+	-rm -f $(BIN)*
+	cd $(SOURCE)/libsara && $(MAKE) distclean
+
+.PHONY: all install uninstall clean distclean
