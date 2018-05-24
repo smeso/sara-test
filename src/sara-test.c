@@ -16,13 +16,15 @@
  *    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <stdio.h>
-#include <sys/stat.h>
+#include <elf.h>
 #include <fcntl.h>
 #include <stdint.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <sys/ipc.h>
+#include <sys/shm.h>
+#include <sys/stat.h>
 #include <unistd.h>
-#include <elf.h>
 
 #include "utils.h"
 #include "libsara/sara.h"
@@ -304,6 +306,155 @@ int mmap_exec(void)
 	return 1;
 }
 
+int shm_mode_change1(void)
+{
+	int shm_id;
+	void *shm_ptr;
+	key_t key;
+	struct shmid_ds shmid_ds;
+
+	key = ftok(".", 0xf);
+	shm_id = shmget(key, PSIZE, IPC_CREAT | 0500);
+	if (shm_id < 0) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, SHM_EXEC|SHM_RDONLY);
+	if(shmctl(shm_id, IPC_RMID, &shmid_ds) == -1) {
+		return 2;
+	}
+	if ((long) shm_ptr == -1) {
+		return 2;
+	}
+
+	if(shmctl(shm_id, IPC_STAT, &shmid_ds) == -1) {
+		return 2;
+	}
+	shmid_ds.shm_perm.mode = 0600;
+	if(shmctl(shm_id, IPC_SET, &shmid_ds) == -1) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, 0);
+	if ((long) shm_ptr == -1) {
+		return 0;
+	}
+	return 1;
+}
+
+int shm_mode_change2(void)
+{
+	int shm_id;
+	void *shm_ptr;
+	key_t key;
+	struct shmid_ds shmid_ds;
+
+	key = ftok(".", 0xf);
+	shm_id = shmget(key, PSIZE, IPC_CREAT | 0600);
+	if (shm_id < 0) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, 0);
+	if(shmctl(shm_id, IPC_RMID, &shmid_ds) == -1) {
+		return 2;
+	}
+	if ((long) shm_ptr == -1) {
+		return 2;
+	}
+
+	if(shmctl(shm_id, IPC_STAT, &shmid_ds) == -1) {
+		return 2;
+	}
+	shmid_ds.shm_perm.mode = 0500;
+	if(shmctl(shm_id, IPC_SET, &shmid_ds) == -1) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, SHM_EXEC|SHM_RDONLY);
+	if ((long) shm_ptr == -1) {
+		return 0;
+	}
+	return 1;
+}
+
+int shm_mode_mprotect(void)
+{
+	int shm_id;
+	void *shm_ptr;
+	key_t key;
+	struct shmid_ds shmid_ds;
+
+	key = ftok(".", 0xf);
+	shm_id = shmget(key, PSIZE, IPC_CREAT | 0700);
+	if (shm_id < 0) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, SHM_RDONLY);
+	if(shmctl(shm_id, IPC_RMID, &shmid_ds) == -1) {
+		return 2;
+	}
+	if ((long) shm_ptr == -1) {
+		return 2;
+	}
+
+	if (try_w(shm_ptr, PSIZE))
+		return 1;
+	return 0;
+}
+
+int shm_permissive_mode(void)
+{
+	int shm_id;
+	void *shm_ptr;
+	key_t key;
+	struct shmid_ds shmid_ds;
+
+	key = ftok(".", 0xf);
+	shm_id = shmget(key, PSIZE, IPC_CREAT | 0700);
+	if (shm_id < 0) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, 0);
+	if(shmctl(shm_id, IPC_RMID, &shmid_ds) == -1) {
+		return 2;
+	}
+	if ((long) shm_ptr == -1) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, SHM_EXEC|SHM_RDONLY);
+	if ((long) shm_ptr == -1) {
+		return 0;
+	}
+	return 1;
+}
+
+int shm_wxorx(void)
+{
+	int shm_id;
+	void *shm_ptr;
+	key_t key;
+	struct shmid_ds shmid_ds;
+
+	key = ftok(".", 0xf);
+	shm_id = shmget(key, PSIZE, IPC_CREAT | 0700);
+	if (shm_id < 0) {
+		return 2;
+	}
+
+	shm_ptr = shmat(shm_id, NULL, SHM_EXEC);
+	if(shmctl(shm_id, IPC_RMID, &shmid_ds) == -1) {
+		return 2;
+	}
+	if ((long) shm_ptr == -1) {
+		return 0;
+	}
+	return 1;
+}
+
 int main(int argc, char *argv[])
 {
 	pid_t child;
@@ -333,6 +484,11 @@ int main(int argc, char *argv[])
 	RUN_TEST(stack_mprotect);
 	RUN_TEST(anon_mmap_mprotect);
 	RUN_TEST(file_mmap_mprotect);
+	RUN_TEST(shm_wxorx);
+	RUN_TEST(shm_permissive_mode);
+	RUN_TEST(shm_mode_change1);
+	RUN_TEST(shm_mode_change2);
+	RUN_TEST(shm_mode_mprotect);
 	RUN_TEST(text_mprotect);
 	RUN_TEST(bss_mprotect);
 	RUN_TEST(data_mprotect);

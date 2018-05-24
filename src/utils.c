@@ -100,6 +100,15 @@ int is_x(void *m)
 	return 0;
 }
 
+int is_w(void *m)
+{
+	char perms[5];
+	get_perms(m, getpid(), perms);
+	if (perms[1] == 'w')
+		return 1;
+	return 0;
+}
+
 void *do_mmap(size_t len, int prot, int flags, int fd)
 {
 	void *m = mmap(NULL, len, prot, flags, fd, 0);
@@ -135,6 +144,14 @@ int try_x(void *m, size_t size)
 {
 	do_mprotect(m, size, PROT_READ | PROT_EXEC);
 	if (is_x(m))
+		return 1;
+	return 0;
+}
+
+int try_w(void *m, size_t size)
+{
+	do_mprotect(m, size, PROT_READ | PROT_WRITE);
+	if (is_w(m))
 		return 1;
 	return 0;
 }
