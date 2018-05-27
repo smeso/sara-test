@@ -455,6 +455,31 @@ int shm_wxorx(void)
 	return 1;
 }
 
+int proc_mem_write(void)
+{
+	int i;
+	char *m;
+	char buffer[] = "TESTSTRINGbbb";
+	FILE *f;
+
+	m = do_mmap(PSIZE, PROT_READ | PROT_WRITE,
+		    MAP_PRIVATE | MAP_ANONYMOUS, -1);
+	memset(m, 'a', PSIZE);
+	do_mprotect(m, PSIZE, PROT_READ);
+
+	f = fopen("/proc/self/mem", "w");
+	if (f == NULL)
+		return 0;
+	fseek(f, (long) m, SEEK_SET);
+	fwrite(buffer, sizeof(buffer)-1, 1, f);
+	fclose(f);
+
+	for (i=0; i < PSIZE; ++i)
+		if (m[i] != 'a')
+			return 1;
+	return 0;
+}
+
 int main(int argc, char *argv[])
 {
 	pid_t child;
@@ -494,6 +519,7 @@ int main(int argc, char *argv[])
 	RUN_TEST(data_mprotect);
 	RUN_TEST(mmap_exec);
 	RUN_TEST(transfer);
+	RUN_TEST(proc_mem_write);
 #if defined __x86_64__ || defined __i386__
 	RUN_TEST(fake_trampolines);
 #else
