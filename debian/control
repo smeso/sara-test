@@ -8,6 +8,7 @@ Homepage: https://smeso.it/sara
 
 Package: sara-test
 Architecture: any
-Depends: ${misc:Depends}, ${shlibs:Depends}, saractl
+Depends: ${misc:Depends}, ${shlibs:Depends}
+Recommends: saractl
 Description: S.A.R.A.'s test suite.
  sara-test is a regression test tool for S.A.R.A.
