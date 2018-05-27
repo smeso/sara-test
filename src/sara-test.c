@@ -499,6 +499,7 @@ int main(int argc, char *argv[])
 	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working1");
 	printf("%25s:\tNOT AVAILABLE\n", "gcc_trampolines_working2");
 #endif
+	RUN_TEST(shm_mode_mprotect);
 
 	printf("\n");
 	printf("These tests should pass with SARA fully enabled:\n");
@@ -513,13 +514,12 @@ int main(int argc, char *argv[])
 	RUN_TEST(shm_permissive_mode);
 	RUN_TEST(shm_mode_change1);
 	RUN_TEST(shm_mode_change2);
-	RUN_TEST(shm_mode_mprotect);
 	RUN_TEST(text_mprotect);
 	RUN_TEST(bss_mprotect);
 	RUN_TEST(data_mprotect);
 	RUN_TEST(mmap_exec);
-	RUN_TEST(transfer);
 	RUN_TEST(proc_mem_write);
+	RUN_TEST(transfer);
 #if defined __x86_64__ || defined __i386__
 	RUN_TEST(fake_trampolines);
 #else

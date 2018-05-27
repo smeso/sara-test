@@ -48,6 +48,7 @@ These tests should pass even with SARA disabled:
      fake_trampoline_heap:      OK
  gcc_trampolines_working1:      OK
  gcc_trampolines_working2:      OK
+        shm_mode_mprotect:      OK
 
 These tests should pass with SARA fully enabled:
              anon_mmap_wx:      VULNERABLE
@@ -57,10 +58,15 @@ These tests should pass with SARA fully enabled:
            stack_mprotect:      VULNERABLE
        anon_mmap_mprotect:      VULNERABLE
        file_mmap_mprotect:      VULNERABLE
+                shm_wxorx:      VULNERABLE
+      shm_permissive_mode:      VULNERABLE
+         shm_mode_change1:      VULNERABLE
+         shm_mode_change2:      VULNERABLE
             text_mprotect:      VULNERABLE
              bss_mprotect:      VULNERABLE
             data_mprotect:      VULNERABLE
                 mmap_exec:      VULNERABLE
+           proc_mem_write:      VULNERABLE
                  transfer:      ERROR
          fake_trampolines:      ERROR
 
@@ -84,6 +90,7 @@ These tests should pass even with SARA disabled:
      fake_trampoline_heap:      OK
  gcc_trampolines_working1:      OK
  gcc_trampolines_working2:      OK
+        shm_mode_mprotect:      OK
 
 These tests should pass with SARA fully enabled:
              anon_mmap_wx:      OK
@@ -93,10 +100,15 @@ These tests should pass with SARA fully enabled:
            stack_mprotect:      OK
        anon_mmap_mprotect:      OK
        file_mmap_mprotect:      OK
+                shm_wxorx:      OK
+      shm_permissive_mode:      OK
+         shm_mode_change1:      OK
+         shm_mode_change2:      OK
             text_mprotect:      OK
              bss_mprotect:      OK
             data_mprotect:      OK
                 mmap_exec:      OK
+           proc_mem_write:      OK
                  transfer:      OK
          fake_trampolines:      OK
 
