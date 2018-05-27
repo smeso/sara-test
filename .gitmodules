@@ -1,3 +1,0 @@
-[submodule "src/libsara"]
-	path = src/libsara
-	url = https://github.com/smeso/libsara.git
