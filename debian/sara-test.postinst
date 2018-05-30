@@ -2,8 +2,8 @@
 
 set -e
 
-if [ "$1" = "configure" ] && command -v /usr/bin/saractl >/dev/null; then
-	/usr/bin/saractl load || true
+if [ "$1" = "configure" ] && command -v saractl >/dev/null; then
+	saractl load || true
 fi
 
 #DEBHELPER#
