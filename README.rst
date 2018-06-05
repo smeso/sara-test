@@ -6,6 +6,7 @@ sara-test is a test suite for S.A.R.A. LSM.
 
 To install it run:
 	make
+	
 	sudo make install
 
 To uninstall it run:
