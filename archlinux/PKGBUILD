@@ -1,6 +1,6 @@
 # Maintainer: Salvatore Mesoraca <s.mesoraca16@gmail.com>
 pkgname=sara-test
-pkgver=r39.6fd2391
+pkgver=0.2
 pkgrel=1
 pkgdesc="S.A.R.A.'s test suite"
 arch=('x86_64')
@@ -9,13 +9,10 @@ license=('GPL3')
 depends=('libsara')
 optdepends=('saractl')
 makedepends=('git')
-source=('git+https://github.com/smeso/sara-test.git')
+source=("git+https://github.com/smeso/sara-test.git#tag=v${pkgver}?signed")
+validpgpkeys=('D7286260BBF31719A2759FA485F0580B9DACBE6E' # Salvatore Mesoraca
+             )
 md5sums=('SKIP')
-
-pkgver() {
-  cd "${srcdir}/${pkgname}"
-  printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
-}
 
 build() {
   cd "${srcdir}/${pkgname}"
