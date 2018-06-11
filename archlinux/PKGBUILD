@@ -6,7 +6,6 @@ pkgdesc="S.A.R.A.'s test suite"
 arch=('x86_64')
 url="https://github.com/smeso/sara-test"
 license=('GPL3')
-depends=('libsara')
 optdepends=('saractl')
 makedepends=('git')
 source=("git+https://github.com/smeso/sara-test.git#tag=v${pkgver}?signed")
