@@ -17,18 +17,12 @@
 #     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-ifndef DESTDIR
-DESTDIR := /
-endif
-ifndef BINDIR
-BINDIR := usr/bin/
-endif
-ifndef EXTRA_BINS_PATH
-EXTRA_BINS_PATH := /usr/lib/sara-test/
-endif
+DESTDIR ?= /
+BINDIR ?= usr/bin/
+EXTRA_BINS_PATH ?= /usr/lib/sara-test/
 
-CC := $(CROSS_COMPILE)gcc
-LD := $(CROSS_COMPILE)ld
+CC ?= $(CROSS_COMPILE)gcc
+LD ?= $(CROSS_COMPILE)ld
 CFLAGS_nopie := -O2 $(CFLAGS)
 LDFLAGS_nopie := -fno-pie $(LDFLAGS)
 ifneq ($(shell $(CC) -dumpspecs 2>/dev/null | grep -e no-pie),)
@@ -81,9 +75,6 @@ $(SOURCE)fake_tramp.o: $(SOURCE)fake_tramp.c
 $(BIN)fake_tramp: $(SOURCE)fake_tramp.o
 	$(CC) -z noexecstack -o $@ $^ $(LDFLAGS_nopie)
 
-ifdef DESTDIR
-ifdef BINDIR
-ifdef EXTRA_BINS_PATH
 install: all
 	mkdir -p $(DESTDIR)/$(EXTRA_BINS_PATH)
 	mkdir -p $(DESTDIR)/$(BINDIR)
@@ -115,9 +106,6 @@ uninstall:
 	-rm $(DESTDIR)/$(EXTRA_BINS_PATH)/fake_tramp
 	-rm $(DESTDIR)/$(BINDIR)/sara-test
 	-rm $(DESTDIR)/usr/share/man/man1/sara-test.1.gz
-endif
-endif
-endif
 
 clean:
 	-rm -f $(SOURCE)*.o $(SOURCE)*~
