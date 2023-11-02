@@ -55,6 +55,7 @@ int count_wx_mappings(pid_t pid);
 int is_wx(void *m);
 int is_x(void *m);
 int is_w(void *m);
+int check_file_exists(const char *path);
 void *do_mmap(size_t len, int prot, int flags, int fd);
 void do_mprotect(const void *addr, size_t len, int prot);
 int try_wx(void *m, size_t size);
