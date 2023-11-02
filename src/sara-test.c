@@ -487,6 +487,12 @@ int main(int argc, char *argv[])
 	PSIZE = getpagesize();
 	setvbuf(stdout, NULL, _IOLBF, 0);
 
+	check_file_exists(TRAMPOLINE_EXEC);
+	check_file_exists(TRAMPOLINE_NOPIE_EXEC);
+	check_file_exists(TRANSFER_EXEC);
+	check_file_exists(PROCATTR_EXEC);
+	check_file_exists(FAKET_EXEC);
+
 	printf("These tests should pass even with SARA disabled:\n");
 	RUN_TEST(wx_mappings);
 	RUN_TEST(nx_shellcode);

@@ -109,6 +109,14 @@ int is_w(void *m)
 	return 0;
 }
 
+int check_file_exists(const char *path)
+{
+	if (access(path, F_OK) != 0) {
+		printf("error: %s doesn't exist, check your EXTRA_BINS_PATH build variable\n", path);
+		exit(2);
+	}
+}
+
 void *do_mmap(size_t len, int prot, int flags, int fd)
 {
 	void *m = mmap(NULL, len, prot, flags, fd, 0);
